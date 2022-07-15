@@ -3,7 +3,7 @@
  * @param fn 被节流的函数
  * @param delay 时间频率 单位ms
  */
-function throttle(fn: Function, delay: number) {
+ function throttle(fn: Function, delay: number) {
     let prevTime = 0
 
     return function(...args) {
