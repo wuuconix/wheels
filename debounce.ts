@@ -1,5 +1,7 @@
+// @ts-nocheck
+
 /**
- * 防抖函数 简单实现
+ * 防抖函数 计时器实现
  * @param fn 被防抖的函数
  * @param delay 时间频率 单位ms
  * @param immediate 周期内第一次触发是否立刻执行
@@ -21,6 +23,27 @@ function debounce(fn: Function, delay: number, immediate: boolean = false) {
             if (flag) {
                 return fn.apply(this, args)
             }
+        }
+    }
+}
+
+/**
+ * 防抖函数 时间戳实现 【周期内第一次触发会立刻执行】
+ * @param fn 被防抖的函数
+ * @param delay 时间频率 单位ms
+ * 
+ * 由于完全没有用计时器，所以无法实现最后一次调用后delay毫秒后触发的效果
+ * 如果一开始的预计要求就是 “周期内第一次触发会立刻执行” 的话，完全可以用这一版，十分简洁。
+ */
+function debounce2(fn: Function, delay: number) {
+    let prevTime = 0
+
+    return function(...args) {
+        const curTime = Date.now()
+        const diff = curTime - prevTime
+        prevTime = curTime
+        if (diff >= delay) {
+            return fn.apply(this, args)
         }
     }
 }
@@ -75,4 +98,4 @@ async function main(mode: number) {
 
 //参数列表 0 | 1 | 2
 //程序编译运行 tsc debounce.ts --lib es2015,dom ; node debounce.js
-main(0)
+main(1)
